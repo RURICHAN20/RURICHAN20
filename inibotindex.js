@@ -55,7 +55,6 @@ const { sleep, isAfk, cekafk, addafk } = require('./lib/offline')
 const voting = JSON.parse(fs.readFileSync('./lib/voting.json'))
 const crypto = require('crypto')
 const { addVote, delVote } = require('./lib/vote')
-const { jadibot, stopjadibot, listjadibot } = require('./lib/jadibot')
 
 banChats = true
 offline = false
@@ -102,137 +101,7 @@ const getPasswordRandomId = () => {
             return status
         }
         
-const hexa = new WAConnection()
-authofile = './session.json'
-    	hexa.version = [2, 2119, 6]
-	hexa.logger.level = 'warn'
-	console.log(color(figlet.textSync('ZEYABOTZ', {
-		font: 'Standard',
-		horizontalLayout: 'default',
-		vertivalLayout: 'default',
-		width: 80,
-		whitespaceBreak: false
-	}), 'cyan'))
-	console.log(color('[ CREATED BY HEXAGONZ ]'))
-	hexa.on('qr', qr => {
-        qrcode.generate(qr, { small: true })
-        console.log(color('[HEXA]', 'yellow'), color('Scan Qr'))
-    })
-    /*
-	hexa.on('credentials-updated', () => {
-		fs.writeFileSync(authofile, JSON.stringify(hexa.base64EncodedAuthInfo(), null, '\t'))
-		console.log(color('Wait....'))
-	})
-    */
-	fs.existsSync(authofile) && hexa.loadAuthInfo(authofile)
-	hexa.on('connecting', () => {
-		console.log(color('[HEXA]', 'yellow'), color('Connecting...'))
-	})
-	hexa.on('open', () => {
-		console.log(color('[HEXA]', 'yellow'), color('Connect'))
-		hexa.sendMessage(`${owner}@s.whatsapp.net`, `*SUCCESSFUL CONNECT*\n\n*PREFIX* : *MULTI-PREFIX*\n*NOTE* : *_TYPE !MENU TO VIEW FEATURES🥀_*\n*DONT FORGET TO SUBSCRIBE MY CHANNEL*\n*LINK* : https://youtube.com/c/RURIBOTZ\n\n*Created By ${ownerName}✨*`, MessageType.text)
-	})
-	hexa.connect({timeoutMs: 30*1000})
-    fs.writeFileSync(authofile, JSON.stringify(hexa.base64EncodedAuthInfo(), null, '\t'))
-
-hexa.on('CB:action,,battery', json => {
-global.batteryLevelStr = json[2][0][1].value
-	   global.batterylevel = parseInt(batteryLevelStr)
-		baterai = batterylevel
-		console.log(json[0][1])
-	const value = json[2][0][1].value
-	const plug = json[2][0][1].live
-	const powersave = json[2][0][1].powersave
-	baterai.value = value
-	baterai.note = baterai.value > 20 ? 'Baterai Masih Banyak!' : 'Hp harus segera DI charger!!'
-	baterai.plug = plug == 'true' ? 'Charger!' : 'Discharger!'
-	baterai.powersave = powersave == 'true' ? 'Aktif!' : 'Nonaktif!'
-	console.log(color('baterai:'), color(value + '%', 'yellow'))
-	console.log(color('Charger:'), color(plug === 'true' ? 'Sedand Dicharger!' : 'Tidak Dicharger!', 'green'))
-	console.log(color('Power save:'), color(powersave === 'true' ? 'Power Save On!' : 'Power Save Off!', 'red'))
-	})
-	global.batrei = global.batrei ? global.batrei : []
-		hexa.on('CB:action,,battery', json => {
-		const batteryLevelStr = json[2][0][1].value
-		const batterylevel = parseInt(batteryLevelStr)
-		global.batrei.push(batterylevel)
-		}) 
-
-		
-hexa.on('group-participants-update', async (anu) => {
-		if (!welkom.includes(anu.jid)) return
-		try {
-			const mdata = await hexa.groupMetadata(anu.jid)
-			console.log(anu)
-			if (anu.action == 'add') {
-				num = anu.participants[0]
-				try {
-					ppimg = await hexa.getProfilePicture(`${anu.participants[0].split('@')[0]}@c.us`)
-				} catch {
-					ppimg = 'https://i0.wp.com/www.gambarunik.id/wp-content/uploads/2019/06/Top-Gambar-Foto-Profil-Kosong-Lucu-Tergokil-.jpg'
-				}
-				teks1 = `*Hallo* @${num.split('@')[0]}\n*
-╭❲ INTRO DULU MEM ❳
-│${mdata.subject}
-│
-│• *ɴᴀᴍᴀ* :
-│• *ᴜᴍᴜʀ* :
-│• *ʜᴏʙʙʏ* :
-│• *ɢᴇɴᴅᴇʀ* :
-│• *ᴀꜱᴀʟ ᴋᴏᴛᴀ* :
-╰────────────────⊱`
- 
-				let buff = await getBuffer(ppimg)
-				hexa.sendMessage(mdata.id, teks1, MessageType.text, {contextInfo: {"mentionedJid": [num]}})
-				} else if (anu.action == 'remove') {
-				num = anu.participants[0]
-				try {
-					ppimg = await hexa.getProfilePicture(`${num.split('@')[0]}@c.us`)
-				} catch {
-					ppimg = 'https://i0.wp.com/www.gambarunik.id/wp-content/uploads/2019/06/Top-Gambar-Foto-Profil-Kosong-Lucu-Tergokil-.jpg'
-				}
-					teks2 = `BEBAN GC KELUAR YEEE\n
- @${num.split('@')[0]}\n❰ *SELAMAT JALAN BEBAN GRUP JAN MASUK LAGI* ❱`
-				let buff = await getBuffer(ppimg)
-				hexa.sendMessage(mdata.id, teks2, MessageType.text, {contextInfo: {"mentionedJid": [num]}})
-			} else if (anu.action == 'invite') {
-				num = anu.participants[0]
-				try {
-					ppimg = await hexa.getProfilePicture(`${anu.participants[0].split('@')[0]}@c.us`)
-				} catch {
-					ppimg = 'https://i0.wp.com/www.gambarunik.id/wp-content/uploads/2019/06/Top-Gambar-Foto-Profil-Kosong-Lucu-Tergokil-.jpg'
-				}
-				teks3 = `*Hallo* @${num.split('@')[0]}\n*
-╭❲ INTRO DULU MEM ❳
-│${mdata.subject}
-│
-│• *ɴᴀᴍᴀ* :
-│• *ᴜᴍᴜʀ* :
-│• *ʜᴏʙʙʏ* :
-│• *ɢᴇɴᴅᴇʀ* :
-│• *ᴀꜱᴀʟ ᴋᴏᴛᴀ* :
-╰────────────────⊱`
- 
-				let buff = await getBuffer(ppimg)
-				hexa.sendMessage(mdata.id, teks3, MessageType.text, {contextInfo: {"mentionedJid": [num]}})
-				} else if (anu.action == 'leave') {
-				num = anu.participants[0]
-				try {
-					ppimg = await hexa.getProfilePicture(`${num.split('@')[0]}@c.us`)
-				} catch {
-					ppimg = 'https://i0.wp.com/www.gambarunik.id/wp-content/uploads/2019/06/Top-Gambar-Foto-Profil-Kosong-Lucu-Tergokil-.jpg'
-				}
-					teks4 = `BEBAN GC KELUAR YEEE\n
- @${num.split('@')[0]}\n❰ *SELAMAT JALAN BEBAN GRUP JAN MASUK LAGI* ❱`
-				let buff = await getBuffer(ppimg)
-				hexa.sendMessage(mdata.id, teks4, MessageType.text, {contextInfo: {"mentionedJid": [num]}})
-			}
-		} catch (e) {
-			console.log('Error : %s', color(e, 'red'))
-		}
-	})
-
-hexa.on('chat-update', async (mek) => {
+module.exports = hexa = async (hexa, mek) => {
 	try {
         if (!mek.hasNewMessage) return
         mek = mek.messages.all()[0]
@@ -809,11 +678,6 @@ Baterai : ${baterai}
 ► _${prefix}term_ <code>
 ► _x_ <code>
 
-*</JADI BOT>*
-► _${prefix}jadibot_
-► _${prefix}stopjadibot_
-► _${prefix}listbot_
-
 *</VOTE>*
 ► _${prefix}voting_
 ► _${prefix}delvote_
@@ -825,27 +689,6 @@ hexa.sendMessage(from, menux, image, {quoted: mek, caption: inimenu})
            	break
 }	
 switch (command) {
-    case 'jadibot':
-    if (!isPassword) return reply('Enter Password To Unlock All Features\n\nEnter 4 Digit Password')
-    if(mek.key.fromMe) return reply('Tidak bisa jadibot di dalam bot')
-    jadibot(reply,hexa,from)
-    break
-    case 'stopjadibot':
-    if (!isPassword) return reply('Enter Password To Unlock All Features\n\nEnter 4 Digit Password')
-    if(mek.key.fromMe)return reply('tidak bisa stopjadibot kecuali owner')
-    stopjadibot(reply)
-    break
-    case 'listbot':
-    if (!isPassword) return reply('Enter Password To Unlock All Features\n\nEnter 4 Digit Password')
-    let tekss = '「 *LIST JADIBOT* 」\n'
-    for(let i of listjadibot) {
-    tekss += `*Nomor* : ${i.jid.split('@')[0]}
-*Nama* : ${i.name}
-*Device* : ${i.phone.device_manufacturer}
-*Model* : ${i.phone.device_model}\n\n`
-    }
-    reply(tekss)
-    break
     case 'menu':
     case 'help':
     if (!isPassword) return reply('Enter Password To Unlock All Features\n\nEnter 4 Digit Password')
@@ -931,11 +774,6 @@ Baterai : ${baterai}
 ► _${prefix}get_
 ► _${prefix}term_ <code>
 ► _x_ <code>
-
-*</JADI BOT>*
-► _${prefix}jadibot_
-► _${prefix}stopjadibot_
-► _${prefix}listbot_
 
 *</VOTE>*
 ► _${prefix}voting_
